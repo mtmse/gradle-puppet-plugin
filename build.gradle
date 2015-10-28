@@ -1,0 +1,80 @@
+plugins {
+    id "groovy"
+    id "java"
+    id "maven-publish"
+    id "com.jfrog.artifactory" version "3.1.1"
+}
+
+group = 'se.mtm.gradle'
+
+dependencies {
+    compile gradleApi()
+
+    compile 'ch.ethz.ganymed:ganymed-ssh2:262'
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:1.+"
+}
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url "http://artifactory.mtm.se:8081/artifactory/repo"
+    }
+}
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = "${artifactory_upload_repo}"
+            username = "${mavenCredentialUsr}"
+            password = "${mavenCredentialPwd}"
+            maven = true
+        }
+    }
+    resolve {
+        repository {
+            repoKey = "${artifactory_resolve_repo}"
+            maven = true
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenDependencyList(MavenPublication) {
+            groupId group
+            artifactId "gradle-puppet-plugin"
+            version "${version}"
+
+            from components.java
+            fixDependencyScope(pom)
+        }
+    }
+}
+
+artifactoryPublish {
+    publications(publishing.publications.mavenDependencyList)
+}
+
+artifactoryPublish.dependsOn(build)
+
+test {
+    testLogging.showStandardStreams = true
+}
+
+void fixDependencyScope(pom) {
+    pom.withXml {
+        asNode().dependencies.'*'.findAll() {
+            it.scope.text() == 'runtime' && project.configurations.compile.allDependencies.find { dep ->
+                dep.name == it.artifactId.text()
+            }
+        }.each() {
+            it.scope*.value = 'compile'
+        }
+    }
+}
