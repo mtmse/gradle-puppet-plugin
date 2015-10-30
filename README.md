@@ -13,7 +13,9 @@ How are you expected to use the plugin?
 
 This task are available
 
-* triggerPuppet - trigger puppet from Gradle
+* deployUtv - trigger puppet from Gradle and deploy on utv
+* deployTest - trigger puppet from Gradle and deploy on test
+* deployProd - trigger puppet from Gradle and deploy on prod
 
 ### Configuration
 
@@ -32,35 +34,44 @@ buildscript {
 }
 ```
 
-The version number, `1.0.5`, is obsolete. Update it with the latest release.
+The version number, `1.0.5`, is wrong. Update it with the latest release.
 
 Configure it:
 
 ```Gradle
 gradlePuppet {
-    host = "statusutv1.mtm.se"
+    utvHosts = ['statusutv1.mtm.se']
+    testHosts = ['statusutv1.mtm.se']
+    prodHosts = ['statusutv1.mtm.se']
 }
 ```
 
 The properties that can be set are
 
-* String user - the user you should execute puppet as. If it isn't set, it will be read from the environment.
-* String password - the password for the user. If it isn't set, it will be read from the environment.
+* String[] utvHosts - the utv hosts
+* String[] testHosts - the tests hosts
+* String[] prodHosts - the prod hosts
 
 The truth and default values are defined in [src/main/java/se/mtm/gradle/extensions/PluginDefaults](https://github.com/mtmse/gradle-puppet-plugin/blob/master/src/main/java/se/mtm/gradle/extensions/PluginDefaults.java)
 
-### Environment variables
+### Environment variable
 
-The plugin need access to a user credentials for communicating with Artifactory. These should be set as environment variables.
+The plugin need access to a user credentials for communicating with the target hosts. The password is already set in Jenkins, this solution piggy back on that password.
 Set
 
-* PUPPET_USER
-* PUPPET_USER_PASSWORD
+* ARTIFACTORY_PASSWORD
 
-to the user and password you use for running Puppet. If you are using Jenkins, then set them
+to the password for the you use for running Puppet. If you are using Jenkins, then set them
 as environment variables in Jenkins. You find the settings by following these menus items:
 
 `Jenkins | Manage Jenkins | Configure System | Environment variables`
+
+
+### User and password
+
+It is possible to set the user and password using regular java properties. Execute Gradle with
+
+`./gradlew deployUtv -Duser=theUserYouWantToExecuteAs -Dpassword=thePAsswordYouWantToUse`
 
 ## Developing
 
@@ -70,12 +81,9 @@ Build
 
 ## Decision log
 
-No important decision has ben taken yet.
+* If no user is set, tpbadmin is assumed
+* Password is read from the environment for minimizing job configuration
 
 ## Resources
-
-[Artifactory REST Api](http://www.jfrog.com/confluence/display/RTF/Artifactory+REST+API)
-
-[JFrog project examples on GitHub](https://github.com/JFrogDev/project-examples)
 
 [Gradle, Writing Custom Plugins](https://gradle.org/docs/current/userguide/custom_plugins.html)
