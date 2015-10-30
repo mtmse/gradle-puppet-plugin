@@ -17,8 +17,17 @@ class TriggerPuppetPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         project.getExtensions().create("gradlePuppet", PluginDefaults.class);
+        getUser();
         getPassword();
         project.getTasks().create("triggerPuppet", TriggerPuppetTask.class);
+    }
+
+    private void getUser() {
+        String user = System.getProperty("user");
+        if (user == null) {
+            user = "tpbadmin";
+        }
+        System.setProperty("user", user);
     }
 
     private void getPassword() {
