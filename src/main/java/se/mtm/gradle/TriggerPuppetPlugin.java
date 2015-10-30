@@ -3,6 +3,7 @@ package se.mtm.gradle;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import se.mtm.gradle.extensions.PluginDefaults;
+import se.mtm.gradle.tasks.DeployTestTask;
 import se.mtm.gradle.tasks.DeployUtvTask;
 import se.mtm.gradle.tasks.TriggerPuppetTask;
 
@@ -22,6 +23,7 @@ class TriggerPuppetPlugin implements Plugin<Project> {
         getPassword();
         project.getTasks().create("triggerPuppet", TriggerPuppetTask.class);
         project.getTasks().create("deployUtv", DeployUtvTask.class);
+        project.getTasks().create("deployTest", DeployTestTask.class);
     }
 
     private void getUser() {
