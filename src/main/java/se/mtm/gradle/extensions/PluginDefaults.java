@@ -3,9 +3,9 @@ package se.mtm.gradle.extensions;
 import java.util.Arrays;
 
 public class PluginDefaults {
-    private String[] utvHosts;
-    private String[] testHosts;
-    private String[] prodHosts;
+    private String[] utvHosts = {};
+    private String[] testHosts = {};
+    private String[] prodHosts = {};
 
     public void setUtvHosts(String[] hosts) {
         int length = hosts.length;
