@@ -3,7 +3,7 @@ package se.mtm.gradle.tasks;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskAction;
-import se.mtm.gradle.extensions.PluginDefaults;
+import se.mtm.gradle.extensions.GradlePuppetPluginDefaults;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public abstract class DeployTask extends DefaultTask {
     @TaskAction
     public void deploy() throws IOException {
         Logger logger = getLogger();
-        PluginDefaults extension = getProject().getExtensions().findByType(PluginDefaults.class);
+        GradlePuppetPluginDefaults extension = getProject().getExtensions().findByType(GradlePuppetPluginDefaults.class);
 
         String user = System.getProperty("user");
         String password = System.getProperty("password");
@@ -30,5 +30,5 @@ public abstract class DeployTask extends DefaultTask {
         }
     }
 
-    abstract String[] getHosts(PluginDefaults extension);
+    abstract String[] getHosts(GradlePuppetPluginDefaults extension);
 }

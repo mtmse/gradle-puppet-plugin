@@ -10,11 +10,11 @@ public class PluginDefaultTest {
     public void set_utv_hosts() {
         String[] expected = {"a", "b"};
 
-        PluginDefaults pluginDefaults = new PluginDefaults();
+        GradlePuppetPluginDefaults gradlePuppetPluginDefaults = new GradlePuppetPluginDefaults();
 
-        pluginDefaults.setUtvHosts(new String[]{"a", "b"});
+        gradlePuppetPluginDefaults.setUtvHosts(new String[]{"a", "b"});
 
-        String[] actual = pluginDefaults.getUtvHosts();
+        String[] actual = gradlePuppetPluginDefaults.getUtvHosts();
 
         assertThat(actual, is(expected));
     }
@@ -23,11 +23,11 @@ public class PluginDefaultTest {
     public void set_test_hosts() {
         String[] expected = {"c", "d"};
 
-        PluginDefaults pluginDefaults = new PluginDefaults();
+        GradlePuppetPluginDefaults gradlePuppetPluginDefaults = new GradlePuppetPluginDefaults();
 
-        pluginDefaults.setTestHosts(new String[]{"c", "d"});
+        gradlePuppetPluginDefaults.setTestHosts(new String[]{"c", "d"});
 
-        String[] actual = pluginDefaults.getTestHosts();
+        String[] actual = gradlePuppetPluginDefaults.getTestHosts();
 
         assertThat(actual, is(expected));
     }
@@ -36,11 +36,11 @@ public class PluginDefaultTest {
     public void set_prod_hosts() {
         String[] expected = {"e", "f"};
 
-        PluginDefaults pluginDefaults = new PluginDefaults();
+        GradlePuppetPluginDefaults gradlePuppetPluginDefaults = new GradlePuppetPluginDefaults();
 
-        pluginDefaults.setProdHosts(new String[]{"e", "f"});
+        gradlePuppetPluginDefaults.setProdHosts(new String[]{"e", "f"});
 
-        String[] actual = pluginDefaults.getProdHosts();
+        String[] actual = gradlePuppetPluginDefaults.getProdHosts();
 
         assertThat(actual, is(expected));
     }

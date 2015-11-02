@@ -2,7 +2,7 @@ package se.mtm.gradle.extensions;
 
 import java.util.Arrays;
 
-public class PluginDefaults {
+public class GradlePuppetPluginDefaults {
     private String[] utvHosts = {};
     private String[] testHosts = {};
     private String[] prodHosts = {};
