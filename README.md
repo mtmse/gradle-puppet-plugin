@@ -41,8 +41,8 @@ Configure it:
 ```Gradle
 gradlePuppet {
     utvHosts = ['statusutv1.mtm.se']
-    testHosts = ['statusutv1.mtm.se']
-    prodHosts = ['statusutv1.mtm.se']
+    testHosts = ['statustest1.mtm.se']
+    prodHosts = ['status1.mtm.se']
 }
 ```
 
